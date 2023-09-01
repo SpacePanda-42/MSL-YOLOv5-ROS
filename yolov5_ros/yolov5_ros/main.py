@@ -21,7 +21,7 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from bboxes_ex_msgs.msg import BoundingBoxes, BoundingBox
-from std_msgs.msg import Header
+from std_msgs.msg import Header, Float32, Float32MultiArray
 from cv_bridge import CvBridge
 
 
@@ -187,8 +187,10 @@ class yolov5_ros(Node):
 
         self.pub_bbox = self.create_publisher(BoundingBoxes, 'yolov5/bounding_boxes', 10)
         self.pub_image = self.create_publisher(Image, 'yolov5/image_raw', 10)
+        self.pub_depths = self.create_publisher(Float32MultiArray, 'yolov5/detected_object_depths', 10)
 
-        self.sub_image = self.create_subscription(Image, 'image_raw', self.image_callback,10)
+        self.sub_image = self.create_subscription(Image, 'image_raw', self.image_callback, 10)
+        self.depth_image = self.create_subscription(Image, 'stereo/converted_depth', self.depth_callback, 10)
 
         # parameter
         FILE = Path(__file__).resolve()
@@ -241,7 +243,10 @@ class yolov5_ros(Node):
                                 self.line_thickness,
                                 self.half,
                                 self.dnn)
-
+        self.x_min_list = [] 
+        self.y_min_list = []
+        self.x_max_list = []
+        self.y_max_list = []
     
     def yolovFive2bboxes_msgs(self, bboxes:list, scores:list, cls:list, img_header:Header):
         bboxes_msg = BoundingBoxes()
@@ -266,16 +271,38 @@ class yolov5_ros(Node):
     def image_callback(self, image:Image):
         image_raw = self.bridge.imgmsg_to_cv2(image, "bgr8")
         # return (class_list, confidence_list, x_min_list, y_min_list, x_max_list, y_max_list)
-        class_list, confidence_list, x_min_list, y_min_list, x_max_list, y_max_list = self.yolov5.image_callback(image_raw)
+        class_list, confidence_list, self.x_min_list, self.y_min_list, self.x_max_list, self.y_max_list = self.yolov5.image_callback(image_raw)
 
-        msg = self.yolovFive2bboxes_msgs(bboxes=[x_min_list, y_min_list, x_max_list, y_max_list], scores=confidence_list, cls=class_list, img_header=image.header)
+        msg = self.yolovFive2bboxes_msgs(bboxes=[self.x_min_list, self.y_min_list, self.x_max_list, self.y_max_list], scores=confidence_list, cls=class_list, img_header=image.header)
         self.pub_bbox.publish(msg)
 
         self.pub_image.publish(image)
 
         print("start ==================")
-        print(class_list, confidence_list, x_min_list, y_min_list, x_max_list, y_max_list)
+        print(class_list, confidence_list, self.x_min_list, self.y_min_list, self.x_max_list, self.y_max_list)
         print("end ====================")
+    
+    def depth_callback(self, image:Image):
+        # When we get a depth map, run this. If we don't currently have any objects detected, this gets skipped. 
+
+        depth_raw = self.bridge.imgmsg_to_cv2(image, "mono16") # Convert the Image message into a cv2 array
+
+        # Iterate over each detected object
+        if len(self.x_min_list) > 0: # Arbitrary. Could've picked self.y_min_list, self.x_max_list, self.y_max_list
+            centers = [((self.x_min_list[idx] + self.x_max_list[idx])/2, (self.y_min_list[idx] + self.y_max_list[idx])/2) for idx in range(len(self.x_min_list))] # Pick the center pixel of each detected object
+            depths = []
+            for center in centers:
+                depths.append(depth_raw[center[0], center[1]])
+            self.pub_depths(depths)
+
+        # for center in centers:
+
+        #     pass
+
+        else:
+            pass
+
+
 
 def ros_main(args=None):
     rclpy.init(args=args)
