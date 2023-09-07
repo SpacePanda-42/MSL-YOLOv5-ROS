@@ -193,7 +193,7 @@ class MSL_YOLO(Node):
         # self.depth_image = self.create_subscription(Image, 'stereo/converted_depth', self.depth_callback, 10)
 
         self.sub_image = self.create_subscription(Image, 'color/video/image', self.image_callback, 10)
-        self.depth_image = self.create_subscription(Image, 'stereo/depth/image', self.depth_callback, 10)
+        self.depth_image = self.create_subscription(Image, 'stereo/depth', self.depth_callback, 10)
 
         # parameter
         FILE = Path(__file__).resolve()
