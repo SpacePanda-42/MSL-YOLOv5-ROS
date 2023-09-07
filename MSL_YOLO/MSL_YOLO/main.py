@@ -187,7 +187,7 @@ class MSL_YOLO(Node):
 
         self.pub_bbox = self.create_publisher(BoundingBoxes, 'yolov5/bounding_boxes', 10)
         self.pub_image = self.create_publisher(Image, 'yolov5/image_raw', 10)
-        self.pub_depths = self.create_publisher(String, 'yolov5/detected_object_depths', 10)
+        self.pub_depths = self.create_publisher(Float32MultiArray, 'yolov5/detected_object_depths', 10)
 
         # self.sub_image = self.create_subscription(Image, 'color/image', self.image_callback, 10)
         # self.depth_image = self.create_subscription(Image, 'stereo/converted_depth', self.depth_callback, 10)
