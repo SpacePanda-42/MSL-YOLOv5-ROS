@@ -285,7 +285,7 @@ class MSL_YOLO(Node):
     def depth_callback(self, image:Image):
         # When we get a depth map, run this. If we don't currently have any objects detected, this gets skipped. 
 
-        depth_raw = self.bridge.imgmsg_to_cv2(image, "mono16") # Convert the Image message into a cv2 array
+        depth_raw = self.bridge.imgmsg_to_cv2(image, "32FC1") # Convert the Image message into a cv2 array
 
         # Iterate over each detected object
         if len(self.x_min_list) > 0: # Arbitrary. Could've picked self.y_min_list, self.x_max_list, self.y_max_list
