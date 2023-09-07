@@ -9,8 +9,8 @@ import numpy as np
 import torch
 from torch.cuda import amp
 
-from yolov5_ros.utils.general import LOGGER, colorstr
-from yolov5_ros.utils.torch_utils import profile
+from MSL_YOLO.utils.general import LOGGER, colorstr
+from MSL_YOLO.utils.torch_utils import profile
 
 
 def check_train_batch_size(model, imgsz=640):

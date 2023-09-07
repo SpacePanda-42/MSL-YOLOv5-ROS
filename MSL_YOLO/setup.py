@@ -5,7 +5,7 @@ from glob import glob
 from urllib.request import urlretrieve
 from setuptools import find_packages
 
-package_name = 'yolov5_ros'
+package_name = 'MSL_YOLO'
 
 setup(
     name=package_name,
@@ -29,7 +29,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'yolov5_ros = '+package_name+'.main:ros_main',
+            'MSL_YOLO = '+package_name+'.main:ros_main',
         ],
     },
 )

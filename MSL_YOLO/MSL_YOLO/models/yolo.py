@@ -20,12 +20,12 @@ if str(ROOT) not in sys.path:
 if platform.system() != 'Windows':
     ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
-from yolov5_ros.models.common import *
-from yolov5_ros.models.experimental import *
-from yolov5_ros.utils.autoanchor import check_anchor_order
-from yolov5_ros.utils.general import LOGGER, check_version, check_yaml, make_divisible, print_args
-from yolov5_ros.utils.plots import feature_visualization
-from yolov5_ros.utils.torch_utils import (fuse_conv_and_bn, initialize_weights, model_info, profile, scale_img, select_device,
+from MSL_YOLO.models.common import *
+from MSL_YOLO.models.experimental import *
+from MSL_YOLO.utils.autoanchor import check_anchor_order
+from MSL_YOLO.utils.general import LOGGER, check_version, check_yaml, make_divisible, print_args
+from MSL_YOLO.utils.plots import feature_visualization
+from MSL_YOLO.utils.torch_utils import (fuse_conv_and_bn, initialize_weights, model_info, profile, scale_img, select_device,
                                time_sync)
 
 try:

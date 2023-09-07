@@ -5,7 +5,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
-    yolox_ros_share_dir = get_package_share_directory('yolov5_ros')
+    yolox_ros_share_dir = get_package_share_directory('MSL_YOLO')
 
     webcam = launch_ros.actions.Node(
         package="v4l2_camera", executable="v4l2_camera_node",
@@ -14,8 +14,8 @@ def generate_launch_description():
         ],
     )
 
-    yolov5_ros = launch_ros.actions.Node(
-        package="yolov5_ros", executable="yolov5_ros",
+    MSL_YOLO = launch_ros.actions.Node(
+        package="MSL_YOLO", executable="MSL_YOLO",
         parameters=[
             {"view_img":True},
         ],
@@ -28,5 +28,5 @@ def generate_launch_description():
 
     return launch.LaunchDescription([
         webcam,
-        yolov5_ros,
+        MSL_YOLO,
     ])

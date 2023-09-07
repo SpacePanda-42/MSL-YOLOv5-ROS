@@ -21,11 +21,11 @@ import yaml
 from PIL import Image
 from torch.cuda import amp
 
-from yolov5_ros.utils.datasets import exif_transpose, letterbox
-from yolov5_ros.utils.general import (LOGGER, check_requirements, check_suffix, check_version, colorstr, increment_path,
+from MSL_YOLO.utils.datasets import exif_transpose, letterbox
+from MSL_YOLO.utils.general import (LOGGER, check_requirements, check_suffix, check_version, colorstr, increment_path,
                            make_divisible, non_max_suppression, scale_coords, xywh2xyxy, xyxy2xywh)
-from yolov5_ros.utils.plots import Annotator, colors, save_one_box
-from yolov5_ros.utils.torch_utils import copy_attr, time_sync
+from MSL_YOLO.utils.plots import Annotator, colors, save_one_box
+from MSL_YOLO.utils.torch_utils import copy_attr, time_sync
 
 
 def autopad(k, p=None):  # kernel, padding
@@ -480,7 +480,7 @@ class DetectMultiBackend(nn.Module):
     @staticmethod
     def model_type(p='path/to/model.pt'):
         # Return model type from model path, i.e. path='path/to/model.onnx' -> type=onnx
-        from yolov5_ros.export import export_formats
+        from MSL_YOLO.export import export_formats
         suffixes = list(export_formats().Suffix) + ['.xml']  # export suffixes
         check_suffix(p, suffixes)  # checks
         p = Path(p).name  # eliminate trailing separators

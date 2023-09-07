@@ -9,13 +9,13 @@ import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
 
-from yolov5_ros.models.common import DetectMultiBackend
-from yolov5_ros.utils.datasets import IMG_FORMATS, VID_FORMATS
-from yolov5_ros.utils.general import (LOGGER, check_img_size, check_imshow, non_max_suppression, scale_coords, xyxy2xywh)
-from yolov5_ros.utils.plots import Annotator, colors
-from yolov5_ros.utils.torch_utils import select_device, time_sync
+from MSL_YOLO.models.common import DetectMultiBackend
+from MSL_YOLO.utils.datasets import IMG_FORMATS, VID_FORMATS
+from MSL_YOLO.utils.general import (LOGGER, check_img_size, check_imshow, non_max_suppression, scale_coords, xyxy2xywh)
+from MSL_YOLO.utils.plots import Annotator, colors
+from MSL_YOLO.utils.torch_utils import select_device, time_sync
 
-from yolov5_ros.utils.datasets import letterbox
+from MSL_YOLO.utils.datasets import letterbox
 
 import rclpy
 from rclpy.node import Node
@@ -179,9 +179,9 @@ class yolov5_demo():
 
             return class_list, confidence_list, x_min_list, y_min_list, x_max_list, y_max_list
 
-class yolov5_ros(Node):
+class MSL_YOLO(Node):
     def __init__(self):
-        super().__init__('yolov5_ros')
+        super().__init__('MSL_YOLO')
 
         self.bridge = CvBridge()
 
@@ -306,7 +306,7 @@ class yolov5_ros(Node):
 
 def ros_main(args=None):
     rclpy.init(args=args)
-    yolov5_node = yolov5_ros()
+    yolov5_node = MSL_YOLO()
     rclpy.spin(yolov5_node)
     yolov5_node.destroy_node()
     rclpy.shutdown()

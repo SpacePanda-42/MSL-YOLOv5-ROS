@@ -1,4 +1,4 @@
-# YOLOv5-ROS
+# MSL_YOLO
 
 [YOLOv5](https://github.com/ultralytics/yolov5) + ROS2 object detection package
 
@@ -12,10 +12,10 @@ This program changes the input of detect.py (ultralytics/yolov5) to `sensor_msgs
 mkdir -p ws_yolov5/src
 cd ws_yolov5/src
 
-git clone https://github.com/Ar-Ray-code/YOLOv5-ROS.git
+git clone https://github.com/Ar-Ray-code/MSL_YOLO.git
 git clone https://github.com/Ar-Ray-code/bbox_ex_msgs.git
 
-pip3 install -r ./YOLOv5-ROS/requirements.txt
+pip3 install -r ./MSL_YOLO/requirements.txt
 
 colcon build --symlink-install
 ```
@@ -27,7 +27,7 @@ colcon build --symlink-install
 ```bash
 cd ws_yolov5/
 source ./install/setup.bash
-ros2 launch yolov5_ros yolov5s_simple.launch.py
+ros2 launch MSL_YOLO yolov5s_simple.launch.py
 ```
 
 <br>
