@@ -294,16 +294,19 @@ class MSL_YOLO(Node):
             for center in centers:
                 depths.append(depth_raw[center[0], center[1]])
             # self.pub_depths(depths)
-            msg = Float32MultiArray()
-            msg.data = depths
-            self.pub_depths(depths)
+            # msg = Float32MultiArray()
+            msg = Float32()
+            msg.data = 1.0
+            self.pub_depths(msg)
 
         # for center in centers:
 
         #     pass
 
         else:
-            pass
+            msg = Float32()
+            msg.data = 2.0
+            self.pub_depths(msg)
 
 
 
