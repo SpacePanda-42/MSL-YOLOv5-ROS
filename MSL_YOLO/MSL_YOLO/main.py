@@ -295,7 +295,7 @@ class MSL_YOLO(Node):
             centers = [((self.x_min_list[idx] + self.x_max_list[idx])/2, (self.y_min_list[idx] + self.y_max_list[idx])/2) for idx in range(len(self.x_min_list))] # Pick the center pixel of each detected object
             depths = []
             for center in centers:
-                depths.append(depth_raw[center[0], center[1]])
+                depths.append(max(depth_raw))
             # self.pub_depths(depths)
             # msg = Float32MultiArray()
             msg = Float32()
