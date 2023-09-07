@@ -21,7 +21,7 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from bboxes_ex_msgs.msg import BoundingBoxes, BoundingBox
-from std_msgs.msg import Header, Float32, Float32MultiArray
+from std_msgs.msg import Header, Float32, Float32MultiArray, String
 from cv_bridge import CvBridge
 
 
@@ -187,7 +187,7 @@ class MSL_YOLO(Node):
 
         self.pub_bbox = self.create_publisher(BoundingBoxes, 'yolov5/bounding_boxes', 10)
         self.pub_image = self.create_publisher(Image, 'yolov5/image_raw', 10)
-        self.pub_depths = self.create_publisher(Float32, 'yolov5/detected_object_depths', 10)
+        self.pub_depths = self.create_publisher(String, 'yolov5/detected_object_depths', 10)
 
         # self.sub_image = self.create_subscription(Image, 'color/image', self.image_callback, 10)
         # self.depth_image = self.create_subscription(Image, 'stereo/converted_depth', self.depth_callback, 10)
@@ -298,8 +298,9 @@ class MSL_YOLO(Node):
                 depths.append(np.max(depth_raw))
             # self.pub_depths(depths)
             # msg = Float32MultiArray()
-            msg = Float32()
-            msg.data = depth_raw.shape[0]
+            # msg = Float32()
+            msg = String()
+            msg.data = str(depth_raw.shape[0])
             self.pub_depths.publish(msg)
 
         # for center in centers:
