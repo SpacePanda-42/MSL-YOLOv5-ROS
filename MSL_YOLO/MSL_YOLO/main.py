@@ -293,7 +293,8 @@ class MSL_YOLO(Node):
             depths = []
             for center in centers:
                 depths.append(depth_raw[center[0], center[1]])
-            self.pub_depths(depths)
+            # self.pub_depths(depths)
+            self.pub_depths([4.0, 5.0, 6.0])
 
         # for center in centers:
 
