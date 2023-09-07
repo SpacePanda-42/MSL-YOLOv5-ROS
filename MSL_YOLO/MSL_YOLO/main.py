@@ -308,8 +308,9 @@ class MSL_YOLO(Node):
         #     pass
 
         else:
-            msg = Float32()
-            msg.data = 2.0
+            msg = String()
+            # msg.data = 2.0
+            msg.data = "hello"
             self.pub_depths.publish(msg)
 
 
