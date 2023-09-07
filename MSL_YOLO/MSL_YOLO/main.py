@@ -300,7 +300,7 @@ class MSL_YOLO(Node):
         #     pass
 
         else:
-            pass
+            self.pub_depths(self.x_min_list)
 
 
 
