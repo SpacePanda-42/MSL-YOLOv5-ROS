@@ -292,15 +292,16 @@ class MSL_YOLO(Node):
 
         # Iterate over each detected object
         if len(self.x_min_list) > 0: # Arbitrary. Could've picked self.y_min_list, self.x_max_list, self.y_max_list
-            centers = [((self.x_min_list[idx] + self.x_max_list[idx])/2, (self.y_min_list[idx] + self.y_max_list[idx])/2) for idx in range(len(self.x_min_list))] # Pick the center pixel of each detected object
+            centers = [((self.x_min_list[idx] + self.x_max_list[idx])//2, (self.y_min_list[idx] + self.y_max_list[idx])//2) for idx in range(len(self.x_min_list))] # Pick the center pixel of each detected object
             depths = []
             for center in centers:
-                depths.append(np.max(depth_raw))
+                depths.append(depth_raw[center[0], center[1]])
             # self.pub_depths(depths)
-            # msg = Float32MultiArray()
+            msg = Float32MultiArray()
+            msg.data = depths
             # msg = Float32()
-            msg = String()
-            msg.data = str(depth_raw.shape[1])
+            # msg = String()
+            # msg.data = str(depth_raw.shape[1])
             self.pub_depths.publish(msg)
 
         # for center in centers:
