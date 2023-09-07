@@ -300,7 +300,7 @@ class MSL_YOLO(Node):
             # msg = Float32MultiArray()
             # msg = Float32()
             msg = String()
-            msg.data = str(depth_raw.shape[0])
+            msg.data = str(depth_raw.shape[1])
             self.pub_depths.publish(msg)
 
         # for center in centers:
